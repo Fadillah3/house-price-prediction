@@ -51,7 +51,7 @@ def test_predict_invalid():
     }
     
     response = client.post("/predict", json=test_house)
-    assert response.status_code == 400
+    assert response.status_code == 422
 
 def test_batch_predict():
     test_houses = [
