@@ -1,0 +1,23 @@
+artifact_path: file:D:/Rifki file/House-price-prediction/mlruns/1/models/m-5fe3a1319f64407c80fdb70652cc98cc/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.14.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.12.0
+model_id: m-5fe3a1319f64407c80fdb70652cc98cc
+model_size_bytes: 2463183
+model_uuid: m-5fe3a1319f64407c80fdb70652cc98cc
+prompts: null
+run_id: deeef1d37145457aaf413022577728cd
+utc_time_created: '2026-06-01 15:56:47.197523'
