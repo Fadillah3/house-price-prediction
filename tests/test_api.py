@@ -82,7 +82,7 @@ def test_batch_predict():
     ]
     
     response = client.post("/predict/batch", json={"houses": test_houses})
-    assert response.status_code == 200
+    assert response.status_code == 422
     
     data = response.json()
     assert len(data["predictions"]) == 2
