@@ -85,32 +85,32 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Configure SSH
-      run: |
-        mkdir -p ~/.ssh/
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-        chmod 600 ~/.ssh/deploy_key
-        echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
-    
-    - name: Deploy to server
-      run: |
-        ssh -i ~/.ssh/deploy_key ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} '
-          cd /app/house-price-prediction
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/house-price-api:latest
-          docker-compose down
-          docker-compose up -d
-          docker system prune -f
-        '
-    
-    - name: Smoke test deployment
-      run: |
-        sleep 10
-        curl -f http://${{ secrets.DEPLOY_HOST }}:8000/health || exit 1
+  # deploy:
+  #   needs: build-and-push
+  #   runs-on: ubuntu-latest
+  #   if: false && github.ref == 'refs/heads/main' # Set to false to disable deployment for now
+  #   
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   
+  #   - name: Configure SSH
+  #     run: |
+  #       mkdir -p ~/.ssh/
+  #       echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+  #       chmod 600 ~/.ssh/deploy_key
+  #       echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+  #   
+  #   - name: Deploy to server
+  #     run: |
+  #       ssh -i ~/.ssh/deploy_key ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} '
+  #         cd /app/house-price-prediction
+  #         docker pull ${{ secrets.DOCKERHUB_USERNAME }}/house-price-api:latest
+  #         docker-compose down
+  #         docker-compose up -d
+  #         docker system prune -f
+  #       '
+  #   
+  #   - name: Smoke test deployment
+  #     run: |
+  #       sleep 10
+  #       curl -f http://${{ secrets.DEPLOY_HOST }}:8000/health || exit 1
